@@ -1,11 +1,15 @@
 import axios from "axios";
 
+// Axios defaults
+const baseURL = "https://example.com";
+axios.defaults.baseURL = baseURL;
+
 // Active http requests
 let activeRequests = 0;
 
 /**
  * Request interceptor
- * Adds default configuration to axios (baseUrl, token, content-type, etc.)
+ * Adds a default configuration to axios (baseUrl, token, content-type, etc.)
  * Counts active http requests
  */
 axios.interceptors.request.use(
@@ -17,9 +21,6 @@ axios.interceptors.request.use(
     } else {
       token = localStorage.getItem("access_token") || null;
     }
-
-    config.headers["Content-type"] = "application/json";
-    config.baseURL = "https://example.com";
 
     if (token != null) {
       config.headers.Authorization = `Bearer ${token}`;
